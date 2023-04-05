@@ -1,0 +1,52 @@
+@import "/node_modules/bulma/sass/utilities/mixins.sass";
+@import "/node_modules/bulma/sass/helpers/spacing.sass";
+
+//responsive padding & margins
+@each $property,
+$shortcut in $spacing-shortcuts {
+
+  @each $breakpoint,
+  $breakpoint-value in $breakpoints {
+
+    @each $name,
+    $value in $spacing-values {
+
+      // All directions
+      .#{$shortcut}-#{$name}-#{$breakpoint} {
+        @include breakpoint(#{$breakpoint}) {
+          #{$property}: $value !important;
+        }
+      }
+
+      // Cardinal directions
+      @each $direction,
+      $suffix in $spacing-directions {
+        .#{$shortcut}#{$suffix}-#{$name}-#{$breakpoint} {
+          @include breakpoint(#{$breakpoint}) {
+            #{$property}-#{$direction}: $value !important;
+          }
+        }
+      }
+
+      // Horizontal axis
+      @if $spacing-horizontal !=null {
+        .#{$shortcut}#{$spacing-horizontal}-#{$name}-#{$breakpoint} {
+          @include breakpoint(#{$breakpoint}) {
+            #{$property}-left: $value !important;
+            #{$property}-right: $value !important;
+          }
+        }
+      }
+
+      // Vertical axis
+      @if $spacing-vertical !=null {
+        .#{$shortcut}#{$spacing-vertical}-#{$name}-#{$breakpoint} {
+          @include breakpoint(#{$breakpoint}) {
+            #{$property}-top: $value !important;
+            #{$property}-bottom: $value !important;
+          }
+        }
+      }
+    }
+  }
+}
